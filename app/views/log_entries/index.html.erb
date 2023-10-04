@@ -1,0 +1,23 @@
+
+<h1>Log</h1>
+
+<% if @log_entries.any? %>
+  
+<table>
+  <tr>
+    <th>Utente</th>
+    <th>Descrizione</th>
+    <th>Ip</th>
+  </tr>
+  <% @log_entries.each do |log_entry| %>
+    <tr>
+      <td><%= log_entry.user.login %></td>
+      <td><%= log_entry.description %></td>
+      <td><%= log_entry.ip %></td>
+    </tr>
+  <% end %>
+</table>
+  
+<%= will_paginate @log_entries %>
+
+<% end %>

@@ -1,0 +1,21 @@
+<div id="mainblock">
+	<div id="mainblockwrapper">
+		<div id="contentstriptab1" class="contentblock">
+
+			<h1>Aggiunta nuova voce <%= RegisterA::NAME %></h1>
+
+			<%= form_for @register do |f| %>
+  
+			<%= render :partial => 'form', :locals => { :f => f } %>
+			
+			<div class="buttons highlight padding4px">				
+				<%= content_tag(:button, icon("add") + " Salva scheda", :class => "buttons", :style => "float: right;") %>
+				<%= link_to(icon("cross") + " Annulla", register_as_path(), :class => "buttons", :style => "float: left;") %>
+				<div style="clear: both;"></div>
+			</div>
+			
+			<% end %>
+			
+		</div>
+	</div>
+</div>

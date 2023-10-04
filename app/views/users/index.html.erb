@@ -1,0 +1,18 @@
+<%= link_to 'Nuovo utente', new_user_path %>
+
+<% if @users.any? %>
+  
+<table>
+  <tr>
+    <th>Login</th>
+    <th>Elimina</th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= link_to user.login, edit_user_path(user) %></td>
+    <td><%= link_to 'Elimina', user_path(user), :method => :delete, :confirm => 'Sei sicuro?' %></td>
+  </tr>
+  <% end %>
+</table>
+  
+<% end %>

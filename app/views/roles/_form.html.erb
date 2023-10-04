@@ -1,0 +1,35 @@
+<div id="errors">
+  <%= f.error_messages %>
+</div>
+
+<p>
+  <%= f.label :name, 'Nome' %>
+  <%= f.text_field :name %>
+</p>
+
+<p>
+  <%= f.label :admin %>
+  <%= f.check_box :admin %>
+</p>
+
+<h3>Gestione Permessi</h3>
+
+<% if @role.admin? %>
+  <p>Admin può automaticamente accedere a tutte le azioni</p>
+<% else %>
+  
+  <% @permission_groups.each do |permission_group| %>
+    
+    <h3><%= permission_group.name %></h3>
+    
+    <% permission_group.permissions.each do |permission| %>
+
+      <p>
+        <%= permission.name %>
+        <%= check_box_tag "permissions[#{permission.id}]", nil, @role.role_permissions.any? { |r| r.permission_id == permission.id } %>
+      </p>
+
+    <% end %>
+  <% end %>
+  
+<% end %>

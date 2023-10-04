@@ -1,0 +1,73 @@
+<div style="float: left; margin-right: 60px;">
+
+	<div class='form_block'>
+		<span class="legend">Informazioni di base</span>
+	
+		<div class='form_field'>
+		  <%= f.label :name, 'Nome' %>
+		  <%= f.text_field :name %>
+		</div>
+	
+	</div>
+
+	<div class='form_block'>
+		<span class="legend">Ruoli</span>
+
+		<div class='form_field checkboxes_field'>
+			<%= f.check_box :sender %>
+			<%= f.label :sender, 'Mittente' %>
+		</div>
+
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :recipient %>
+		  <%= f.label :recipient, 'Destinatario' %>
+		</div>
+
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :carrier %>
+		  <%= f.label :carrier, 'Vettore' %>
+		</div>
+
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :vendor %>
+		  <%= f.label :vendor, 'Fornitore' %>
+		</div>
+	
+	</div>
+
+</div>
+
+<div style="float: left;">
+	<div class='form_block'>
+		<span class="legend">Visibilità</span>
+	
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :register_a %>
+		  <%= f.label :register_a, 'Registro 29' %>
+		</div>
+
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :register_b %>
+		  <%= f.label :register_b, 'Registro B' %>
+		</div>
+
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :register_c %>
+		  <%= f.label :register_c, 'Registro Dog.10' %>
+		</div>
+
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :register_d %>
+		  <%= f.label :register_d, 'Registro Intra 10' %>
+		</div>
+
+		<div class='form_field checkboxes_field'>
+		  <%= f.check_box :register_e %>
+		  <%= f.label :register_e, 'Registro AM' %>
+		</div>
+		
+	</div>
+	
+</div>
+
+<div style="clear: both;"></div>

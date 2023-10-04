@@ -1,0 +1,22 @@
+<div id="mainblock">
+  <div id="mainblockwrapper">
+    <div id="contentstriptab1" class="contentblock">
+
+      <h3>Elimina voce</h3>
+      <p>
+        Sei sicuro di voler eliminare la pratica <%= @register.code %> con mittente "<%= @register.vehicle_name("sender") %>" e destinatario "<%= @register.vehicle_name("recipient") %>"?
+      </p>
+
+      <%= form_for @register, method: :delete do |f| %>
+
+        <div class="buttons highlight padding4px" style="margin-top: 40px"> 
+          <%= content_tag(:button, icon("add") + " Elimina", :class => "buttons", :style => "float: right;") %>
+          <%= link_to(icon("cross") + " Annulla", register_es_path(), :class => "buttons", :style => "float: left;") %>
+          <div style="clear: both;"></div>
+        </div>
+
+      <% end %>
+      
+    </div>
+  </div>
+</div>

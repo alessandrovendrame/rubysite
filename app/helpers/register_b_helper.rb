@@ -1,0 +1,2 @@
+module RegisterBHelper
+end

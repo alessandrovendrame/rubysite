@@ -1,0 +1,151 @@
+<div style="float: left; width: 360px; margin-right: 60px;">
+
+	<div class='form_block'>
+		<span class="legend">Informazioni di base</span>
+	
+		<div class='form_field'>
+			<%= f.label :code, 'Pratica' %>
+			<%= f.text_field :code %>
+		</div>
+	
+		<div class='form_field'>
+		  <%= f.label :date, 'Data' %>
+		  <%= f.date_select :date %>
+		</div>
+	
+	</div>
+
+	<div class='form_block'>
+		<span class="legend">Soggetti coinvolti</span>
+
+		<div class='form_field'>
+			<%= f.label :sender_id, 'Mittente' %>
+			<%=
+				select_values = [['Aggiungi nuova voce >>', 'add']]
+				select_values += Vehicle.senders('register_e').map { |x| [x.name, x.id] }
+				f.select :sender_id, select_values, :include_blank => true
+			%>
+			<%= f.text_field(:new_sender_name, :style => 'display: none; width: 90%;') %>
+			<div id='register_e_new_sender_name_auto_complete' class='auto_complete'></div>
+			<%= auto_complete_field("register_e_new_sender_name", :url => lookup_vehicles_path, :param_name => "name") %>
+			<%= behavior("#register_e_sender_id:change", "function(e){if ($F(e.target)=='add'){$('register_e_new_sender_name').show()}else{$('register_e_new_sender_name').hide()}}")  %>
+		</div>
+		
+		<div class='form_field'>
+			<%= f.label :vendor_id, 'Fornitore' %>
+			<%=
+				select_values = Vehicle.vendors('register_e').map { |x| [x.name, x.id] }
+				select_values += [['Aggiungi nuova voce >>', 'add']]
+				f.select :vendor_id, select_values, :include_blank => true
+			%>
+			<%= f.text_field(:new_vendor_name, :style => 'display: none; width: 90%;') %>
+			<div id='register_e_new_vendor_name_auto_complete' class='auto_complete'></div>
+			<%= auto_complete_field("register_e_new_vendor_name", :url => lookup_vehicles_path, :param_name => "name") %>
+			<%= behavior("#register_e_vendor_id:change", "function(e){if ($F(e.target)=='add'){$('register_e_new_vendor_name').show()}else{$('register_e_new_vendor_name').hide()}}")  %>
+		</div>
+	
+		<div class='form_field'>
+			<%= f.label :recipient_id, 'Destinatario' %>
+			<%=
+				select_values = Vehicle.recipients('register_e').map { |x| [x.name, x.id] }
+				select_values += [['Aggiungi nuova voce >>', 'add']]
+				f.select :recipient_id, select_values, :include_blank => true
+			%>
+			<%= f.text_field(:new_recipient_name, :style => 'display: none; width: 90%;') %>
+			<div id='register_e_new_recipient_name_auto_complete' class='auto_complete'></div>
+			<%= auto_complete_field("register_e_new_recipient_name", :url => lookup_vehicles_path, :param_name => "name") %>
+			<%= behavior("#register_e_recipient_id:change", "function(e){if ($F(e.target)=='add'){$('register_e_new_recipient_name').show()}else{$('register_e_new_recipient_name').hide()}}")  %>
+		</div>
+		
+		<div class='form_field'>
+			<%= f.label :carrier_id, 'Vettore' %>
+			<%=
+				select_values = Vehicle.carriers('register_e').map { |x| [x.name, x.id] }
+				select_values += [['Aggiungi nuova voce >>', 'add']]
+				f.select :carrier_id, select_values, :include_blank => true
+			%>
+			<%= f.text_field(:new_carrier_name, :style => 'display: none; width: 90%;') %>
+			<div id='register_e_new_carrier_name_auto_complete' class='auto_complete'></div>
+			<%= auto_complete_field("register_e_new_carrier_name", :url => lookup_vehicles_path, :param_name => "name") %>
+			<%= behavior("#register_e_carrier_id:change", "function(e){if ($F(e.target)=='add'){$('register_e_new_carrier_name').show()}else{$('register_e_new_carrier_name').hide()}}")  %>			
+		</div>
+	
+	</div>
+
+	<div class='form_block'>
+		<span class="legend">Dettagli operazione</span>
+	
+		<div class='form_field'>
+		  <%= f.label :plate_number, 'Targa' %>
+		  <%= f.text_field :plate_number %>
+		</div>
+			
+		<div class='form_field'>
+		  <%= f.label :weight, 'Peso' %>
+		  <%= f.text_field :weight %>
+		</div>
+
+		<div class='form_field'>
+		  <%= f.label :packages, 'Colli' %>
+		  <%= f.text_field :packages %>
+		</div>
+
+		<div class='form_field'>
+		  <%= f.label :container, 'N. Container' %>
+		  <%= f.text_field :container %>
+		</div>
+	
+	</div>
+</div>
+
+<div style="float: left;">
+	<div class='form_block'>
+		<span class="legend">Costi e ricavi</span>
+	
+		<div class='form_field'>
+		  	<%= f.label :nole_cost, 'Costo noleggio' %>
+			<%= f.text_field :nole_cost, :onkeyup => "gross_register_e(this)" %>
+		</div>
+
+		<div class='form_field'>
+		  	<%= f.label :bl_cost, 'Costo B/L' %>
+			<%= f.text_field :bl_cost, :onkeyup => "gross_register_e(this)" %>
+		</div>
+
+		<div class='form_field'>
+		  	<%= f.label :transport_cost, 'Costo Trasporto' %>
+			<%= f.text_field :transport_cost, :onkeyup => "gross_register_e(this)" %>
+		</div>
+
+		<div class='form_field'>
+		  	<%= f.label :stop_cost, 'Costo Soste' %>
+			<%= f.text_field :stop_cost, :onkeyup => "gross_register_e(this)" %>
+		</div>
+
+		<div class='form_field'>
+			<%= f.label :incidental_cost, 'Costi Accessori' %>
+			<%= f.text_field :incidental_cost, :onkeyup => "gross_register_e(this)" %>
+		</div>
+		
+		<div class='form_field'>
+			<%= f.label :net, 'Ricavo' %>
+			<%= f.text_field :net, :onkeyup => "gross_register_e(this)" %>
+		</div>
+		
+		<div class='form_field'>
+			<%= f.label :gross, 'Utile Lordo' %>
+			<%= f.text_field :gross, :disabled => true %>
+		</div>
+		
+	</div>
+	
+	<div class='form_block'>
+		<span class="legend">Note di approfondimento</span>
+
+		<div class='form_field'>
+		  <%= f.text_area :notes, :style => "width: 100%; height: 200px;" %>
+		</div>
+	</div>
+</div>
+
+<div style="clear: both;"></div>

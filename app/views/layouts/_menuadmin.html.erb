@@ -1,0 +1,30 @@
+<div id="header">
+<ul class='menu-primary'>
+	
+	<% if current_user && current_user.authorized_to_see_action?("register_as", "index") %>
+	<li class='<%= ' menu-primary-selected ' if controller.controller_name == 'register_as' %>'><a href='/register_as'><%= RegisterA::NAME %></a></li>
+	<% end %>
+	
+	<% if current_user && current_user.authorized_to_see_action?("register_bs", "index") %>
+		<li class='<%= ' menu-primary-selected ' if controller.controller_name == 'register_bs' %>'><a href='/register_bs'>Registro B</a></li>
+	<% end %>
+	
+	<% if current_user && current_user.authorized_to_see_action?("register_cs", "index") %>
+		<li class='<%= ' menu-primary-selected ' if controller.controller_name == 'register_cs' %>'><a href='/register_cs'><%= RegisterC::NAME %></a></li>
+	<% end %>
+	
+	<% if current_user && current_user.authorized_to_see_action?("register_ds", "index") %>
+		<li class='<%= ' menu-primary-selected ' if controller.controller_name == 'register_ds' %>'><a href="/register_ds">Registro Intra</a></li>
+	<% end %>
+	
+	<% if current_user && current_user.authorized_to_see_action?("register_es", "index") %>
+		<li class='<%= ' menu-primary-selected ' if controller.controller_name == 'register_es' %>'><a href="/register_es">Registro AM</a></li>
+	<% end %>
+	
+	<% if current_user && current_user.authorized_to_see_action?("vehicles", "index") %>
+		<li class='floatright <%= ' menu-primary-selected ' if controller.controller_name == 'vehicles' %>'><a href="/vehicles">Aziende</a></li>
+	<% end %>
+	
+</ul>
+<div style='clear: both'></div>
+</div>

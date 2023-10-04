@@ -1,0 +1,117 @@
+<div id="mainblock">
+	<div id="mainblockwrapper">
+		<div id="contentstriptab1" class="contentblock">
+			
+			<div style='float: right; margin-right: 20px; margin-bottom: 20px;'>
+	      	<%= link_to(icon("add") + " Aggiungi voce", new_register_c_path(),
+					:class => "buttons", :style => "text-align: center;")
+	    	%>
+	      	</div>
+	
+			<h1><%= @name %><%= " (<span class='highlight'>filtrato</span>)".html_safe if @filtered %></h1>
+			
+			<div style="clear: both; margin: 10px 0px; padding: 10px; background-color: #F9F9F9;">
+				<form action="/register_cs" method="get">
+					<div class="search_form_block">
+						<label>Mese:</label>
+						<% @month.blank? ? monthsel = nil : monthsel = Date.new(Date.today.year, @month.to_i, 1) %>
+						<%= select_month monthsel, :prompt => "", :use_short_month => true %>
+					</div>
+					<div class="search_form_block">
+						<label>Dal (gg/mm/aaaa):</label>
+						<input name="from" value="<%= params[:from] %>">
+					</div>
+					<div class="search_form_block">
+						<label>Al (gg/mm/aaaa):</label>
+						<input name="to" value="<%= params[:to] %>">
+					</div>
+					<div class="search_form_block">
+						<label>Mittente:</label>
+						<%=
+							select_values = Vehicle.senders('register_c').map { |x| [x.name, x.id] }
+							select_tag :sender, options_for_select([''] + select_values, params[:sender].to_i)
+						%>
+					</div>
+					<div class="search_form_block">
+						<label>Destinatario:</label>
+						<%=
+							select_values = Vehicle.recipients('register_c').map { |x| [x.name, x.id] }
+							select_tag :recipient, options_for_select([''] + select_values, params[:recipient].to_i)
+						%>
+					</div>
+					<div class="search_form_block">
+						<label>Tipo:</label>
+						<input name="carrier" value="<%= params[:type] %>">
+					</div>
+					<div class="search_form_block">
+						<label>Targa:</label>
+						<input name="plate" value="<%= params[:plate] %>">
+					</div>
+					<input type="submit" value="Filtra >>" style="float: right; margin-top: 4px; font-size: 1.6em;">
+					<br style="clear: both;">
+				</form>
+			</div>
+			
+			<% if @filtered %>
+			<table id="totals" class="totals highlight">
+				<tbody>
+			    <tr>
+			      <td>Costi: &euro; <%= @total_cost %></td>
+			      <td>Magazzino: &euro; <%= @total_net_stock %></td>
+			      <td>Dogana: &euro; <%= @total_net_customs %></td>
+			      <td>Trasporto: &euro; <%= @total_net_transport %></td>
+			      <td>Utile lordo: &euro; <%= @total_gross %></td>
+			      <td></td>
+			    </tr>
+				</tbody>
+			</table>
+			<% end %>
+
+			<% if @registers.any? %>
+			  <table id="list" class="mainlist">
+				<thead>
+			    <tr>
+			      <th class="ct col10">Pratica</th>
+			      <th class="col10">Data</th>
+			      <th class="col30 cut">Mittente</th>
+			      <th class="col30 cut">Destinatario</th>
+			      <th class="col30 cut">Tipo</th>
+			      <th class="ct col15">Procedura</th>
+			      <th class="ct col15">Costi</th>
+			      <th class="ct col15">Magaz.</th>
+			      <th class="ct col15">Dogana</th>
+			      <th class="ct col15">Trasp.</th>
+			      <th class="ct col15">Utile lordo</th>
+			      <th class="col-ico"></th>
+			    </tr>
+				</thead>
+				<tbody>
+			    <% @registers.each do |register| %>
+			    <tr class="rowcursorpointer" onclick="gotToPage('<%= "/register_cs/edit/#{register.id}" %>')">
+			      <td><%= register.code %></td>
+			      <td><%= friendly_datestamp(register.date) %></td>
+			      <td><div><%= register.vehicle_name("sender") %></div></td>
+			      <td><div><%= register.vehicle_name("recipient") %></div></td>
+			      <td><div><%= register.operation %></td>
+			      <td><%= icon(register.customs ? "tick" : "cross") %></td>
+			      <td>&euro; <%= register.cost %></td>
+			      <td>&euro; <%= register.net_stock %></td>
+			      <td>&euro; <%= register.net_customs %></td>
+			      <td>&euro; <%= register.net_transport %></td>
+			      <td>&euro; <%= register.gross %></td>
+			      <td><%= link_to icon("delete"), register_c_path(register.id) %></td>
+			    </tr>
+			    <% end %>
+				</tbody>
+			  </table>
+			<% end %>
+			
+			<%= will_paginate @registers, {:previous_label => "<< Recenti", :next_label => "Precedenti >>"} %>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	setupTable("list");
+</script>

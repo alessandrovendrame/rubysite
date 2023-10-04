@@ -1,0 +1,42 @@
+<div id="mainblock">
+	<div id="mainblockwrapper">
+		<div id="contentstriptab1" class="contentblock">
+			
+			<div style='float: right; margin-right: 20px; margin-bottom: 20px;'>
+	      	<%= link_to(icon("add") + " Aggiungi azienda", new_vehicle_path(),
+					:class => "buttons", :style => "text-align: center;")
+	    	%>
+	      	</div>
+	
+			<h1>Gestione aziende</h1>
+
+			<% if @vehicles.any? %>
+			  <table id="list" class="mainlist">
+				<thead>
+			    <tr>
+			      <th>Nome</th>
+			      <th>Ruoli</th>
+			      <th class="col-ico"></th>
+			    </tr>
+				</thead>
+				<tbody>
+			    <% @vehicles.each do |vehicle| %>
+			    <tr class="rowcursorpointer" onclick="window.location='<%= "/vehicles/edit/#{vehicle.id}" %>'">
+					<td><%= vehicle.name %></td>
+					<td><%= vehicle.roles %></td>
+					<td><%= link_to icon("delete"), vehicle_path(vehicle.id) %></td>
+			    </tr>
+			    <% end %>
+				</tbody>
+			  </table>
+			<% end %>
+			
+			<%= will_paginate @registers, {:previous_label => "<< Recenti", :next_label => "Precedenti >>"} %>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	setupTable("list");
+</script>

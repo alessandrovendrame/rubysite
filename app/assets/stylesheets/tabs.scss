@@ -1,0 +1,107 @@
+
+
+#header {
+	position: relative;
+	width: 100%;
+	background-color: #696969;
+}
+
+.menu-primary {
+	margin: 0;
+	padding: 0;
+	clear: both;
+	float: left;
+	position: relative;
+	width: 100%; /* a width is required for Opera, older Mozilla browsers, and Konqueror browsers */
+	background-image: image-url("layout/navbar_bg.png");
+	background-repeat: repeat;
+	background-position: top left;
+}
+
+.menu-primary li  {
+	display: block;
+	list-style: none;
+	border-right: 1px solid #5599DD;
+	float: left;
+}
+
+.menu-primary a,.menu-primary span,.menu-primary a.current {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: #333;
+	padding: 4px 16px;
+	font-size: 1.2em;
+}
+
+.menu-primary a {
+	color: #FFFFFF;
+	background-image: image-url("layout/navbar_bg.png");
+	background-repeat: repeat;
+	background-position: top left;
+}
+
+.menu-primary a:hover {
+	margin-top: 0;
+	background-image: image-url("layout/navbar_bg3.png");
+	background-repeat: repeat;
+	background-position: top left;
+}
+
+.menu-primary-selected a {
+  color: #FFFFFF;
+	background-image: image-url("layout/navbar_bg2.png");
+	background-repeat: repeat;
+	background-position: top left;
+	padding-bottom: 6px;
+	margin-top: 0;
+}
+
+.menu-primary li.floatright {
+	float: right;
+	border-left: 1px solid #5599DD;
+}
+
+.menu-secondary {
+	position: absolute;
+	margin: 0;
+	padding: 0px 0px 0px 15px;
+	left: 1px;
+	width: 100%;
+	margin-top: 0.7em;
+	font-size: 0.9em;
+	color: #6D9EDE;
+}
+
+.menu-secondary a, .menu-secondary li span {
+	width: auto;
+	display: block;
+	float: left;
+	padding: 0 10px;
+	margin: 0;
+	text-align: auto;
+	border: none;
+	border-right: 1px dotted #AAA;
+	background: none;
+
+}
+
+.menu-secondary a {
+	color: #06C;
+	text-decoration: underline;
+}
+
+.menu-secondary a:hover {
+	color: #333;
+	background: transparent;
+	padding: 0 10px;
+	border: none;
+	border-right: 1px dotted #AAA;
+}
+
+.menu-secondary a:active {
+	color: #000;
+	background: transparent;
+}
+
+.menu-secondary li:last-child a { border: none; }

@@ -1,0 +1,21 @@
+<div id="mainblock">
+	<div id="mainblockwrapper">
+		<div id="contentstriptab1" class="contentblock">
+
+			<h1>Modifica <%= @vehicle.name %></h1>
+
+			<%= form_for @vehicle do |f| %>
+
+				<%= render :partial => 'form', :locals => { :f => f } %>
+			  
+				<div class="buttons highlight padding4px">				
+					<%= content_tag(:button, icon("add") + " Salva scheda", :class => "buttons", :style => "float: right;") %>
+					<%= link_to(icon("cross") + " Annulla", vehicles_path(), :class => "buttons", :style => "float: left;") %>
+					<div style="clear: both;"></div>
+				</div>
+
+			<% end %>
+			
+		</div>
+	</div>
+</div>

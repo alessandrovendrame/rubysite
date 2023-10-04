@@ -1,0 +1,137 @@
+<div id="mainblock">
+	<div id="mainblockwrapper">
+		<div id="contentstriptab1" class="contentblock">
+			
+			<div style='float: right; margin-right: 20px; margin-bottom: 20px;'>
+	      	<%= link_to(icon("add") + " Aggiungi voce", new_register_e_path(),
+					:class => "buttons", :style => "text-align: center;")
+	    	%>
+	      	</div>
+	
+			<h1><%= @name %><%= " (<span class='highlight'>filtrato</span>)".html_safe if @filtered %></h1>
+			
+			<div style="clear: both; margin: 10px 0px; padding: 10px; background-color: #F9F9F9;">
+				<form action="/register_es" method="get">
+					<div class="search_form_block">
+						<label>Mese:</label>
+						<% @month.blank? ? monthsel = nil : monthsel = Date.new(Date.today.year, @month.to_i, 1) %>
+						<%= select_month monthsel, :prompt => "", :use_short_month => true %>
+					</div>
+					<div class="search_form_block">
+						<label>Dal (gg/mm/aaaa):</label>
+						<input name="from" value="<%= params[:from] %>">
+					</div>
+					<div class="search_form_block">
+						<label>Al (gg/mm/aaaa):</label>
+						<input name="to" value="<%= params[:to] %>">
+					</div>
+					<div class="search_form_block">
+						<label>Mittente:</label>
+						<%=
+							select_values = Vehicle.senders('register_e').map { |x| [x.name, x.id] }
+							select_tag :sender, options_for_select([''] + select_values, params[:sender].to_i)
+						%>
+					</div>
+					<div class="search_form_block">
+						<label>Destinatario:</label>
+						<%=
+							select_values = Vehicle.recipients('register_e').map { |x| [x.name, x.id] }
+							select_tag :recipient, options_for_select([''] + select_values, params[:recipient].to_i)
+						%>
+					</div>
+					<div class="search_form_block">
+						<label>Fornitore:</label>
+						<%=
+							select_values = Vehicle.vendors('register_e').map { |x| [x.name, x.id] }
+							select_tag :vendor, options_for_select([''] + select_values, params[:carrier].to_i)
+						%>
+					</div>
+					<div class="search_form_block">
+						<label>Vettore:</label>
+						<%=
+							select_values = Vehicle.carriers('register_e').map { |x| [x.name, x.id] }
+							select_tag :carrier, options_for_select([''] + select_values, params[:carrier].to_i)
+						%>
+					</div>
+					<div class="search_form_block">
+						<label>Container:</label>
+						<input name="container" value="<%= params[:container] %>">
+					</div>
+					<div class="search_form_block">
+						<label>Targa:</label>
+						<input name="plate" value="<%= params[:plate] %>">
+					</div>
+					<input type="submit" value="Filtra >>" style="float: right; margin-top: 4px; font-size: 1.6em;">
+					<br style="clear: both;">
+				</form>
+			</div>
+			
+			<% if @filtered %>
+			<table id="totals" class="totals highlight">
+				<tbody>
+			    <tr>
+			      <td>Noleggio: &euro; <%= @nole_cost %></td>
+			      <td>B/L: &euro; <%= @bl_cost %></td>
+			      <td>Trasporto: &euro; <%= @transport_cost %></td>
+			      <td>Soste: &euro; <%= @stop_cost %></td>
+			      <td>Accessori: &euro; <%= @incidental_cost %></td>
+				  <td>Ricavo: &euro; <%= @net %></td>
+				  <td>Utile: &euro; <%= @gross %></td>
+			      <td></td>
+			    </tr>
+				</tbody>
+			</table>
+			<% end %>
+
+			<% if @registers.any? %>
+			  <table id="list" class="mainlist">
+				<thead>
+			    <tr>
+			      <th class="ct col10">Pratica</th>
+			      <th class="col15">Data</th>
+			      <th class="col20 cut">Mittente</th>
+			      <th class="col20 cut">Fornitore</th>
+			      <th class="col20 cut">Destinatario</th>
+			      <th class="col20 cut">Vettore</th>
+			      <th class="ct col10">Nol.</th>
+			      <th class="ct col10">B/L</th>
+			      <th class="ct col10">Trasp.</th>
+			      <th class="ct col10">Soste</th>
+			      <th class="ct col10">Accessori</th>
+			      <th class="ct col10">Ricavo</th>
+			      <th class="ct col10">Utile</th>
+			      <th class="col-ico"></th>
+			    </tr>
+				</thead>
+				<tbody>
+			    <% @registers.each do |register| %>
+			    <tr class="rowcursorpointer" onclick="gotToPage('<%= "/register_es/edit/#{register.id}" %>')">
+					<td><%= register.code %></td>
+					<td><%= friendly_datestamp(register.date) %></td>
+					<td><div><%= register.vehicle_name("sender") %></div></td>
+					<td><div><%= register.vehicle_name("vendor") %></div></td>
+					<td><div><%= register.vehicle_name("recipient") %></div></td>
+					<td><div><%= register.vehicle_name("carrier") %></div></td>
+					<td><%= register.nole_cost %></td>
+					<td><%= register.bl_cost %></td>
+					<td><%= register.transport_cost %></td>
+					<td><%= register.stop_cost %></td>
+					<td><%= register.incidental_cost %></td>
+					<td><%= register.net %></td>
+					<td><%= register.gross %></td>
+					<td><%= link_to icon("delete"), register_e_path(register.id) %></td>
+			    </tr>
+			    <% end %>
+				</tbody>
+			  </table>
+			<% end %>
+			
+			<%= will_paginate @registers, {:previous_label => "<< Recenti", :next_label => "Precedenti >>"} %>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	setupTable("list");
+</script>

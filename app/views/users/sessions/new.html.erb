@@ -1,0 +1,25 @@
+<div style="width: 300px; margin-left: auto; margin-right: auto; margin-top: 100px;">
+	
+	<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class='form_block form_block_edit'>
+      <div class='form_field'>
+        <%= f.label :email, "Email" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class='form_field'>
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
+
+      <div class="form_field">
+        <label><%= f.check_box :remember_me, style: "width: auto; display: inline;" %> Ricorda l'accesso per 2 settimane</label>
+      </div>
+
+      <div class="form_field">
+        <%= submit_tag 'Accedi >>' %>
+      </div>
+    </div>
+	<% end %>
+	
+</div>
